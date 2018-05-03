@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>dome</title>
+		<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	<body>
+		版本号： <input type="text" name="" id="version" value="1.0.0" /><br>
+		版本描述：<textarea rows="3" cols="30" id="description">description </textarea><br>
+		版本路径： <input type="text" name="" id="path" value="path" /><br>
+		系统：<input type="text" name="" id="os" value="ios" /><br>
+		<input type="button" name="" id="" value="提交" />
+		<div id="getLast">获取最新版本</div>
+		<div id="lastVersion"></div>
+		<div id="getList">获取版本列表</div>
+		<div id="listVersion"></div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$("input[type=button]").on("click", function(){
+				var postParameter = {
+					version: $("#version").val(),
+					description: $("#description").val(),
+					path: $("#path").val(),
+					os: $("#os").val()
+				}
+				$.post("/api/updateVersion",postParameter,function(data){
+					if(data.status && data.data == "success"){
+						alert("success");
+					}
+					else{
+						alert(data.msg);
+					}
+				})
+			});
+			$("#getLast").on("click", function(){
+			
+				$.post("/api/getLastVersion",{},function(data){
+					if(data.status){
+						$("#lastVersion").text(JSON.stringify(data.data));
+					}
+					else{
+						alert(data.msg);
+					}
+				})
+			});
+			$("#getList").on("click", function(){
+			
+				$.post("/api/getVersionList",{},function(data){
+					if(data.status){
+						$("#listVersion").text(JSON.stringify(data.data));
+					}
+					else{
+						alert(data.msg);
+					}
+				})
+			});
+			
+			
+		})
+	</script>
+</html>
