@@ -70,6 +70,9 @@ module.exports = function(){
 							break;
 						}
 					}
+					if(!i) {
+						data.historyVersion[i] = obj;
+					}
 				}
 			}
 			fs.writeFile('./version.json', JSON.stringify(data),function(err){
