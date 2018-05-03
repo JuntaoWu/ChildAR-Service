@@ -83,12 +83,11 @@ module.exports = function(){
 	}
 	
 	var getVersionList = function(req, res) {
-		console.log(res);
 		fs.readFile('./version.json', 'utf8', function(err, data){
 			console.log(data);  
 			if(err) {
 				res.sendErr(err);
-			}
+			} else
 			if(!data){
 				res.send([]);
 			} else {
@@ -104,14 +103,18 @@ module.exports = function(){
 			console.log(data);  
 			if(err) {
 				res.sendErr(err);
-			}
-			data = JSON.parse(data).historyVersion;
-			for(var i = 0; i < data.length; i++){
-				if(data[i].version == version) {
-					res.send(data[i]);
+			} else
+			if(!data){
+				res.send(null);
+			} else {
+				data = JSON.parse(data).historyVersion;
+				for(var i = 0; i < data.length; i++){
+					if(data[i].version == version) {
+						res.send(data[i]);
+					}
 				}
+				res.send('null');
 			}
-			res.send(null);
 		});
 	}
 	
@@ -121,12 +124,16 @@ module.exports = function(){
 			console.log(data);  
 			if(err) {
 				res.sendErr(err);
-			}
-			data = JSON.parse(data).historyVersion;
-			if(data.length) {
-				res.send(data[data.length - 1]);
-			} else {
+			} else
+			if(!data){
 				res.send(null);
+			} else {
+				data = JSON.parse(data).historyVersion;
+				if(data.length) {
+					res.send(data[data.length - 1]);
+				} else {
+					res.send('null');
+				}
 			}
 		});
 	}
