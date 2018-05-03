@@ -84,7 +84,7 @@ module.exports = function(){
 	
 	var getVersionList = function(req, res) {
 		fs.readFile('./version.json', 'utf8', function(err, data){
-			console.log(data);  
+			// console.log(data);  
 			if(err) {
 				res.sendErr(err);
 			} else
@@ -100,7 +100,7 @@ module.exports = function(){
 	var getVersion = function(req, res) {
 		var version = req.body.version;
 		fs.readFile('./version.json', 'utf8', function(err, data){
-			console.log(data);  
+			// console.log(data);  
 			if(err) {
 				res.sendErr(err);
 			} else
@@ -113,7 +113,7 @@ module.exports = function(){
 						res.send(data[i]);
 					}
 				}
-				res.send('null');
+				res.send(null);
 			}
 		});
 	}
@@ -121,7 +121,7 @@ module.exports = function(){
 	var getLastVersion = function(req, res) {
 		
 		fs.readFile('./version.json', 'utf8', function(err, data){
-			console.log(data);  
+			// console.log(data);  
 			if(err) {
 				res.sendErr(err);
 			} else
@@ -132,7 +132,7 @@ module.exports = function(){
 				if(data.length) {
 					res.send(data[data.length - 1]);
 				} else {
-					res.send('null');
+					res.send(null);
 				}
 			}
 		});
