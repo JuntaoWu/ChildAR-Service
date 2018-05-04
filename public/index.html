@@ -7,8 +7,8 @@
 	<body>
 		版本号： <input type="text" name="" id="version" value="1.0.0" /><br>
 		版本描述：<textarea rows="3" cols="30" id="description">description </textarea><br>
-		版本路径： <input type="text" name="" id="path" value="path" /><br>
-		系统：<input type="text" name="" id="os" value="ios" /><br>
+		android版本路径： <input type="text" name="" id="android" value="" /><br>
+		ios版本路径： <input type="text" name="" id="ios" value="" /><br>
 		<input type="button" name="" id="" value="提交" />
 		<div id="getLast">获取最新版本</div>
 		<div id="lastVersion"></div>
@@ -22,8 +22,8 @@
 				var postParameter = {
 					version: $("#version").val(),
 					description: $("#description").val(),
-					path: $("#path").val(),
-					os: $("#os").val()
+					androidPath: $("#android").val(),
+					iosPath: $("#ios").val()
 				}
 				$.post("/api/updateVersion",postParameter,function(data){
 					if(data.status && data.data == "success"){

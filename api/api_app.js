@@ -2,35 +2,22 @@
 var fs = require('fs');
 
 module.exports = function(){
-	function getVersionObj(callback) {
-		callback = callback || function(){};
-		fs.readFile('./version.json', 'utf8', function(err, data){
-			if(!data) {
-				var data = {
-					historyVersion: [],
-				}
-			} else {
-				data = JSON.parse(data);
-			}
-		});
-	}
-	function setVersionObj(obj, callback) {
-		
-	}
 	
 	var updateVersion = function(req, res) {
-		if(!req.body.version) {
-			res.sendErr('err');
+		if(!req.body.version ||
+			!/^[a-zA-Z]*[0-9]+\.[0-9]+\.[0-9]+$/.test(req.body.version) ) {
+			res.sendErr('版本号有误！');
+			return;
 		}
 		var obj = {
 				version: req.body.version,
 				description: req.body.description || '',
-				path: req.body.path || '',
-				os: req.body.os || '',
+				androidPath: req.body.path || '',
+				iosPath: req.body.os || '',
 				updatetime: Date.parse(new Date())
 			},
-			versionNums = req.body.version.split('.');
-		
+			versionNums = req.body.version.replace(/^[a-zA-Z]*/, '').split('.');
+			
 		fs.readFile('./version.json', 'utf8', function(err, data){
 			if(!data) {
 				var data = {
@@ -40,13 +27,15 @@ module.exports = function(){
 				data = JSON.parse(data);
 			}
 			var len = data.historyVersion.length,
-				shouldAdd = true;
+				shouldAdd = true, versN = [];
 			if(!len){
 				data.historyVersion.push(obj);
 			} else {
+				
 				for(var i = len - 1; i >= 0; i--){
-					if(data.historyVersion[i].version == obj.version){
+					if(data.historyVersion[i].version.replace(/^[a-zA-Z]*/, '') == obj.version.replace(/^[a-zA-Z]*/, '')){
 						//更新版本信息
+						data.historyVersion[i].version = obj.version;
 						data.historyVersion[i].description = obj.description || data.historyVersion[i].description;
 						data.historyVersion[i].path = obj.path || data.historyVersion[i].path;
 						data.historyVersion[i].os = obj.os || data.historyVersion[i].os;
@@ -58,7 +47,7 @@ module.exports = function(){
 				if(shouldAdd){
 					//插入版本信息
 					for(var i = len; i > 0; i--){
-						versN = data.historyVersion[i-1].version.split('.');
+						versN = data.historyVersion[i-1].version.replace(/^[a-zA-Z]*/, '').split('.');
 						if(versN[0] > versionNums[0]){
 							data.historyVersion[i] = data.historyVersion[i-1];
 						} else if (versN[1] > versionNums[1]){
