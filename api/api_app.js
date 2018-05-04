@@ -12,8 +12,8 @@ module.exports = function(){
 		var obj = {
 				version: req.body.version.replace(/^[a-zA-Z]*/, ''),
 				description: req.body.description || '',
-				androidPath: req.body.path || '',
-				iosPath: req.body.os || '',
+				androidPath: req.body.androidPath || '',
+				iosPath: req.body.iosPath || '',
 				updatetime: Date.parse(new Date())
 			},
 			versionNums = req.body.version.replace(/^[a-zA-Z]*/, '').split('.');
@@ -37,8 +37,8 @@ module.exports = function(){
 						//更新版本信息
 						data.historyVersion[i].version = obj.version;
 						data.historyVersion[i].description = obj.description || data.historyVersion[i].description;
-						data.historyVersion[i].path = obj.path || data.historyVersion[i].path;
-						data.historyVersion[i].os = obj.os || data.historyVersion[i].os;
+						data.historyVersion[i].androidPath = obj.androidPath || data.historyVersion[i].androidPath;
+						data.historyVersion[i].iosPath = obj.iosPath || data.historyVersion[i].iosPath;
 						data.historyVersion[i].updatetime = Date.parse(new Date());
 						shouldAdd = false;
 						break;
