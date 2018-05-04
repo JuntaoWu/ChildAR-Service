@@ -48,11 +48,11 @@ module.exports = function(){
 					//插入版本信息
 					for(var i = len; i > 0; i--){
 						versN = data.historyVersion[i-1].version.replace(/^[a-zA-Z]*/, '').split('.');
-						if(versN[0] > versionNums[0]){
+						if(versN[0]*1 > versionNums[0]*1){
 							data.historyVersion[i] = data.historyVersion[i-1];
-						} else if (versN[1] > versionNums[1]){
+						} else if (versN[1]*1 > versionNums[1]*1){
 							data.historyVersion[i] = data.historyVersion[i-1];
-						} else if (versN[2] > versionNums[2]) {
+						} else if (versN[2]*1 > versionNums[2]*1) {
 							data.historyVersion[i] = data.historyVersion[i-1];
 						} else {
 							data.historyVersion[i] = obj;
