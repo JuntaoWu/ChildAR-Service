@@ -10,7 +10,7 @@ module.exports = function(){
 			return;
 		}
 		var obj = {
-				version: req.body.version,
+				version: req.body.version.replace(/^[a-zA-Z]*/, ''),
 				description: req.body.description || '',
 				androidPath: req.body.path || '',
 				iosPath: req.body.os || '',
